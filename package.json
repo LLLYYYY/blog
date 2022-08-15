@@ -18,6 +18,10 @@
     "hexo-renderer-pug": "^1.0.0",
     "hexo-renderer-sass": "^0.4.0",
     "hexo-renderer-stylus": "^0.3.3",
-    "hexo-server": "^0.3.3"
+    "hexo-server": "^0.3.3",
+    "node-sass": "latest"
+  },
+  "devDependencies": {
+    "sass": "^1.54.4"
   }
 }
