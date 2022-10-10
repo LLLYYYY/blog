@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>AFL_Note | Yu Liang's Blog</title><link rel="stylesheet" type="text/css" href="/blog/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/latest/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/grids-responsive-min.min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/latest/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/blog/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/blog/favicon.ico"><link rel="apple-touch-icon" href="/blog/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/blog/apple-touch-icon.png"><script type="text/javascript" src="//lib.baomitu.com/clipboard.js/latest/clipboard.min.js"></script><script type="text/javascript" src="//lib.baomitu.com/toastr.js/latest/toastr.min.js"></script><link rel="stylesheet" href="//lib.baomitu.com/toastr.js/latest/toastr.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">AFL_Note</h1><a id="logo" href="/blog/.">Yu Liang's Blog</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/blog/."><i class="fa fa-home"> Home</i></a><a href="/blog/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/blog/about/"><i class="fa fa-user"> About</i></a><a href="/blog/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">AFL_Note</h1><div class="post-meta">2020-11-30<span> | </span><span class="category"><a href="/blog/categories/Fuzzer/">Fuzzer</a></span></div><div class="post-content"><ul>
+<li><input checked="" disabled="" type="checkbox"> Pulling JPEGs out of thin air</li>
+<li><input checked="" disabled="" type="checkbox"> LLVM IR.</li>
+<li><input checked="" disabled="" type="checkbox"> afl_clang_fast.c and afl_llvm_pass.so.cc</li>
+<li><input checked="" disabled="" type="checkbox"> AFL_min.c</li>
+<li><input checked="" disabled="" type="checkbox"> How to trim the input file?</li>
+<li><input checked="" disabled="" type="checkbox"> How do the program manage its queue?</li>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="http://lcamtuf.blogspot.com/2014/08/binary-fuzzing-strategies-what-works.html">http://lcamtuf.blogspot.com/2014/08/binary-fuzzing-strategies-what-works.html</a> (Fuzzing strategies details)</li>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="http://lcamtuf.blogspot.com/2015/01/afl-fuzz-making-up-grammar-with.html">http://lcamtuf.blogspot.com/2015/01/afl-fuzz-making-up-grammar-with.html</a> (Dictionaries)</li>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="http://lcamtuf.blogspot.com/2014/11/afl-fuzz-crash-exploration-mode.html">http://lcamtuf.blogspot.com/2014/11/afl-fuzz-crash-exploration-mode.html</a>. (Investigating crashes.)</li>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://lcamtuf.blogspot.com/2016/02/say-hello-to-afl-analyze.html">https://lcamtuf.blogspot.com/2016/02/say-hello-to-afl-analyze.html</a> (Automatically inferring file syntax with afl-analyze)</li>
+<li><input disabled="" type="checkbox"> Difference between afl-tmin.c and afl-cmin.c?</li>
+<li><input disabled="" type="checkbox"> QEMU</li>
+<li><input checked="" disabled="" type="checkbox"> AFL-analyze. </li>
+<li><input disabled="" type="checkbox"> ClusterFuzz (Google Chrome) </li>
+<li><input disabled="" type="checkbox"> OSSFuzz.</li>
+<li><input disabled="" type="checkbox"> Project Springfield</li>
+<li><input disabled="" type="checkbox"> Fork is not scalable.</li>
+<li><input disabled="" type="checkbox"> fork() needs to update the reverse mapping of a physical page for swapping under memory contention, which is a well-known scalability bottleneck in the current Linux kernel [8, 9, 11]. (In paper Designing New Operating Primitives to Improve Fuzzing Performance)</li>
+<li><input disabled="" type="checkbox"> combine fuzzing with symbolic execution [13, 27, 36]. (In paper Designing New Operating Primitives to Improve Fuzzing Performance)</li>
+<li><input disabled="" type="checkbox"> Evolving the input queue. (In technical_details.txt) 3 links.</li>
+<li><input checked="" disabled="" type="checkbox"> Perf_tips.txt</li>
+<li><input checked="" disabled="" type="checkbox"> env_variables.txt</li>
+<li><input disabled="" type="checkbox"> Forward Symbolic analysis. (Not finished)</li>
+</ul>
+<ul>
+<li><p>C++ <strong>__thread</strong> keyword. Global variables but no need for across threads global protection’s values. If the variables are shared between threads, then each thread will maintain its own variable version. Can only works with Plain Old Data, cannot work with class, struct, union etc. (<em><strong>C language model</strong></em>)</p>
+</li>
+<li><p>AFL can generate larger size mutations than the original inputs, however, it depends on whether the program has character over character level identifications.</p>
+</li>
+<li><p>How the AFL trimming process works? (Not afl-min.c)</p>
+<ul>
+<li>The inputs are split into several blocks, the original block size is around 1&#x2F;16 of the total length of the inputs, and increase the size x0.5 every time. The trimming process iterate through the trimming block, removing them and see if the checksum of the track_bits changed or not. If changed, remove the trimming block permanently, otherwise, keep iterating. Stop if the remaining input length &lt;&#x3D; 4, or trimming block being too small (1&#x2F;1024 of total length).</li>
+</ul>
+</li>
+<li><p>How the AFL manage its queue list structure?</p>
+<ul>
+<li>add_to_queue is the main function to edit new queue entry.</li>
+<li>queue_top means the last elements in the queue, which will be pop() at last. </li>
+<li>queue_cur is the one that is iterating, not the queue variable itself. Every time when queue_cur finish its cycle, then queue_cur &#x3D; queue to reset.</li>
+</ul>
+</li>
+<li><p>How to auto generate new dictionary? 1. If flip the bytes always generate a new path, that is distinct from the neighboring regions, then we can add these bytes as a new syntax to the dictionary. 2. Because of the nature of the fuzzer (coverage), we can easily distinguish between nonsensical and the one that actually follow the rules of the grammar. Keep the already constructed syntax and keep refining the others, we could progressively construct more complex and meaningful syntax.</p>
+</li>
+<li><p>AFL parallelization: Each process runs independently normally. After a fix times of run cycles, each process will look into other processes’ output directory, scan their output interesting queues, and execute them in their own process area, if new trace_bits regions turn up, then import the newly discovered queue to its local queue list. It seems that each process will mark the latest scanned queue position from other queues (seems to be global, weird). </p>
+<ul>
+<li>It is recommended to run the first process as -M (Master process), which will forced deterministic mutations, and run the other processes as -S (Slave process), which will indicate random mutations. Running multiple -M process is feasible, but low efficient. (Because duplicate deterministic mutations)</li>
+</ul>
+</li>
+<li><p>The theory behind afl-analysis.c</p>
+<ul>
+<li>Perform walking bytes, first bit flipping, sub_10 and add_10 operations across the input sequence, run with target binary, and observe the trace_bits checksums.<ul>
+<li>If checksums is not changing at all, then the current byte should be <strong>no-op (raw) data</strong>.</li>
+<li>If ANY bit flip causes the same change, then it could be <strong>checksums, magic values and maybe atomically compared tokens</strong>.</li>
+<li>Long sections with ANY bit flip causes the same change, it could be <strong>encrypted data, checksums</strong>. </li>
+<li><strong>“Pure” data sections</strong>, where analyzer-injected changes consistently elicit differing changes to control flow. (Not inferring in the code?)</li>
+</ul>
+</li>
+<li>Paper “ProFuzzer: On-the-ﬂy Input Type Probing for Better Zero-day Vulnerability Discovery”<ul>
+<li>Not using random mutations from the AFL, but use the heuristic from the fuzzing input analysis (input semantic) to put more focus on more targeted mutations. For example, not mutating <strong>raw data</strong> input sections etc. </li>
+<li>Two step process:<ol>
+<li>Iterating bytes with all possible values (0x00 to 0xff). Gain the rough idea of input data field semantics. </li>
+<li>Combine related fields together, and mutates them together. For example, the consecutive bytes whose specific content leads to the same exception path under mutation can be grouped into a ﬁeld.</li>
+</ol>
+</li>
+<li>6 input field types:<ul>
+<li>assertion: only a single valid value that allows the program to execute correctly.</li>
+<li>raw data: Nothing happens here.</li>
+<li>enumeration: Only a small set of valid values, with other values causing the program to erroneously terminate.</li>
+<li>loop count: Might impact loop counts.</li>
+<li>size: An input ﬁeld of the size type determines the amount of data the program should read from the input file for further processing. Similar to the offset type, if a size value causes any out-of-range data access, the program terminates with errors; within the valid range, different sizes may result in different execution paths, since different data are processed. The difference between offset and size lies in that if a size value is set to zero, errors must occur, while setting an offset to 0 likely does not cause similar problems.</li>
+<li>offset: The location from which the program can access the subsequent data in the input file.</li>
+</ul>
+</li>
+<li>The algorithm has a reprobing function, where a new input comes in, the algorithm will firstly verified the similar input field semantics with the newly inputs, if successful, directly use the same input fields information from the old file.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Original code for afl-analysis:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> RESP_NONE:     SAYF(<span class="string">&quot;no-op block\n&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> RESP_MINOR:    SAYF(<span class="string">&quot;superficial content\n&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> RESP_VARIABLE: SAYF(<span class="string">&quot;critical stream\n&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> RESP_FIXED:    SAYF(<span class="string">&quot;\&quot;magic value\&quot; section\n&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> RESP_LEN:      SAYF(<span class="string">&quot;suspected length field\n&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> RESP_CKSUM:    SAYF(<span class="string">&quot;suspected cksum or magic int\n&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> RESP_SUSPECT:  SAYF(<span class="string">&quot;suspected checksummed block\n&quot;</span>); <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>AFL persistant mode:</p>
+<ul>
+<li>Use a long-live process to test multiple inputs. </li>
+<li>The program and the inputs are required to be stateless, which means we must guarantee that in different runs the memory structure of the process is unchanged (does not corrupted by previous runs).</li>
+</ul>
+</li>
+<li><p>AFL LLVM mode:</p>
+<ul>
+<li>Afl_clang_fast use compiler level instrumentation, instead of the more crude assembly-level rewriting. Could be much faster than traditional methods, not feasible with GCC. I still do not understand the how that works.</li>
+<li>Use the LLVM Intermedia Language to inject the instruments, compile handles optimization. Might because of the reduction of function jumps (trampoline). </li>
+<li>As high as 2x faster runtime. </li>
+<li>In file afl-clang-fast.c and afl-llvm-pass.so.cc. </li>
+<li><strong>__afl_prev_loc</strong> and <strong>__afl_area_ptr</strong> being declared in afl_llvm_rt.o.c, and being referenced as (GlobalValue::ExternalLinkage, GlobalVariable::GeneralDynamicTLSModel) in the afl_llcm_pass.so.cc.</li>
+</ul>
+</li>
+<li><p>Paper “Designing New Operating Primitives to Improve Fuzzing Performance”</p>
+<ul>
+<li>A performance optimization focused approach to improve AFL.</li>
+<li>Github link: <a href="https://github.com/tarafans/perf-fuzz.git">https://github.com/tarafans/perf-fuzz.git</a></li>
+<li>Three contributions:<ol>
+<li>Use system call snapshot() rather than fork().<ul>
+<li>fork() is not scalable with multiple cores. <ul>
+<li><input disabled="" type="checkbox"> <em><strong>This includes a lot of unnecessary features such as creating the reverse mapping of the child’s physical pages for swapping, which is a well-known performance bottleneck in Linux [8, 9, 11].</strong></em></li>
+</ul>
+</li>
+<li>snapshot() is a custom made system calls.</li>
+</ul>
+</li>
+<li>Create a duel file system to cache seed writing to the disk. Cache the file on memory.</li>
+<li>Shared In_memory Test_case log. For AFL syncing. Shared across different processes of AFL. Because it is in memory, it could be very fast, and avoid file system read&#x2F;write violations and files iterations (latency).</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="tags"><a href="/blog/tags/random_notes"><i class="fa fa-tag">random_notes</i></a></div><div class="post-nav"><a class="pre" href="/blog/2020/12/04/How_to_read_papers/">How to read papers</a><a class="next" href="/blog/2019/10/19/Ubuntu_CUDA_Installation/">Ubuntu CUDA installation</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://github.com/SteveLeungYL/blog"/></form></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="About"><img src="img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/username" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:admin@domain.com" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/username" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Fuzzer/">Fuzzer</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/General/">General</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/LLVM/">LLVM</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Programming-Language/">Programming_Language</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/blog/tags/random-notes/" style="font-size: 15px;">random_notes</a> <a href="/blog/tags/blogs/" style="font-size: 15px;">blogs</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/blog/2022/10/01/Run%20sudo%20without%20password/">Run `SUDO` without password</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/09/08/PDF_check_font/">PDF check font</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2022/08/15/python_profiling/">python profiling</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/12/29/LLVM_Pass_Blog_1/">The road to LLVM pass (Part I)</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/12/29/LLVM_Pass_Blog_2/">The road to LLVM pass (Part II)</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/12/29/LLVM_Pass_Blog_3/">The road to LLVM pass (Part III)</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/12/17/The_road_to_modern_C++/">The road to modern C++</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/12/04/How_to_read_papers/">How to read papers</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2020/11/30/AFL_note/">AFL_Note</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2019/10/19/Ubuntu_CUDA_Installation/">Ubuntu CUDA installation</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/blog/." rel="nofollow">Yu Liang's Blog.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/blog/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.js"></script><script type="text/javascript" src="/blog/js/fancybox.js?v=1.0.0"></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.css"><script type="text/javascript" src="/blog/js/copycode.js?v=1.0.0" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/blog/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/blog/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/blog/js/smartresize.js?v=1.0.0"></script></div></body></html>
