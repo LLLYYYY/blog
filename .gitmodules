@@ -1,0 +1,3 @@
+[submodule "yu_blog/themes/stack"]
+	path = yu_blog/themes/stack
+	url = git@github.com:CaiJimmy/hugo-theme-stack.git
