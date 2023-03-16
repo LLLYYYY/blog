@@ -1,4 +1,4 @@
-baseurl: https://steveleungyl.github.io/blog/
+baseurl: https://steveleungyl.github.io/
 languageCode: en-us
 theme: stack
 paginate: 15
