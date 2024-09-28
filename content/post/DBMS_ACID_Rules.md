@@ -7,7 +7,7 @@ tags:
 - random_notes
 ---
 
-ACID means `Atomicity`, `Consistency`, `Isolation` and `Durability`. 
+> ACID means `Atomicity`, `Consistency`, `Isolation` and `Durability`. 
 
 ## A: `Atomicity`:
 One transaction being atomic meaning it either succeeds completely or fails completely. If any of the statements constituting a transaction fails to complete, the entire transaction fails and the database is left unchanged. This is guaranteed in all situation, even in power failure, crashes etc. 
