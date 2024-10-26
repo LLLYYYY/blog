@@ -1,6 +1,6 @@
 ---
 title: AFL_Note
-date: Nov 30, 2020
+date: 2020-11-30
 categories:
 - Fuzzer
 tags:

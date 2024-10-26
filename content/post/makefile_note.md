@@ -1,6 +1,6 @@
 ---
 title: Some random important Makefile Notes 
-date: Oct 26, 2024
+date: 2024-10-26
 categories:
 - Programming_Language 
 tags:
