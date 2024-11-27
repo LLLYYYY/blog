@@ -94,3 +94,13 @@ It is OK to repeatedly merge other branches to one branch. For example, we can r
 `git clone --filter=blob:none`: Download the git commit tree and the latest blob, but skipped the history blob at the time. Git will fetch for blob if you ask for history commit data. 
 
 If you are working with super large monorepo, you can use `scalar` command, an alternative `git` command that wraps up some `git` commands optimized for large repos. 
+
+If you have a series of commits, and you want to patch something up in the early commit, you can use: 
+
+```bash
+git commit -a --fixup=<old_commit_hash>
+# here, it will create a new patch commit on top of the head. 
+git rebase --autosquash main
+# apply the patch commit to the old commit, and then rebase the commit series. 
+# it runs rebase in the background, if it encounters something that cannot fix, that it will prompt you for rebasing. 
+```
